@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block content %}
+    <details>
+        <summary>>>> Cadastrar Novo Pássaro <<<</sumary>
+        <div class="col-md-4">
+            <form action="{{url_for('galeria')}}" method="POST" enctype="multipart/form-data">
+                <label for="file">Envie sua imagem:</label>
+                <input class="form-control" name="filename" type="file" required><br>
+                <button type="submit" class="btn btn-danger btn-block">Enviar</button>
+                <br>
+            </form>
+        </div>
+    </details>
+
+    <hr>
+    <h5>Lista de Pássaros</h5>
+
+    <table class="table table-bordered table-hover">
+        <tbody>
+            <div class="row">
+                {% for img in imagens %}
+                <div class="col-md-3 m-auto">
+                    <img src="/static/uploads/{{img.filename}}" class="img-thumbnail">
+                </div>
+                {% endfor %}
+            </div>      
+        </tbody>
+    </table>
+
+    <hr>
+    <!-- Linha de Paginação -->
+    <p style="text-align: center;">
+        <!-- Se houver registros anteriores -->
+        {% if  imagens.has_prev %}
+            <a href="{{url_for('galeria', page=imagens.prev_num)}}"> << Anterior</a>
+        {% endif %}
+
+        <!-- Se houver registros posteriores -->
+        {% if  imagens.has_next %}
+            <a href="{{url_for('galeria', page=imagens.next_num)}}"> Próximo >></a>
+        {% endif %}            
+    </p>
+{% endblock content %}
